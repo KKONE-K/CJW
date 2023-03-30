@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    img {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<body>
+    <form id="uplode" enctype="multipart/form-data" method="post">
+		<!-- 选择文件 -->
+        <input type="file" id="nima" value="1" name="file" />
+		<!-- 提交 -->
+        <input type="button" value="提交" onclick="tiijjao()">
+    </form>
+    <button id="getImg">
+        下载图片
+    </button>
+    <img src="" id="imgPreview">
+    <script>
+        let src = ''
+        const dom = document.getElementById('nima')
+        const getImg = document.getElementById('getImg')
+        //监听下载按钮点击事件
+        getImg.addEventListener('click', function () {
+            // console.log('下载',src);
+            const a = document.createElement('a')
+            a.setAttribute('href', src)
+            a.setAttribute('download', 'test')
+            a.click()
+            getImg.appendChild(a)
+            console.log('ssss', a);
+        })
+        //提交
+        const tiijjao = function () {
+            const uplode = document.getElementById('uplode')
+            const formdata = new FormData(uplode)//表单数据
+            const name = formdata.get('file')
+            const reader = new FileReader()//异步文件读取机制
+            reader.readAsDataURL(name);//发起异步请求，转为base64数据
+            reader.onload = function (res) {//图片加载
+                document.querySelector('#imgPreview').src = res.target.result
+                src = res.target.result
+				// console.log('点击', res.target.result)
+            }
+            // console.log(formdata,name);
+        }
+
+    </script>
+</body>
+
+</html>
